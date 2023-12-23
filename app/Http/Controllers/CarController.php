@@ -9,13 +9,10 @@ use Illuminate\Support\Facades\DB;
 class CarController extends Controller
 {
     // user connect to car from car reference. set car user_id
-    public function connect(Request $request)
+    public function connect(Request $request, $reference)
     {
-        $request->validate([
-            "reference" => "required|string"
-        ]);
 
-        $car = \App\Models\Car::where("reference", $request->reference)->first();
+        $car = Car::where("reference", $reference)->first();
         if (!$car) {
             return response()->json([
                 "message" => "Car not found"
@@ -31,13 +28,9 @@ class CarController extends Controller
     }
 
     // disconnected
-    public function disconnect(Request $request)
+    public function disconnect(Request $request, $reference)
     {
-        $request->validate([
-            "reference" => "required|string"
-        ]);
-
-        $car = \App\Models\Car::where("reference", $request->reference)->whereUserId($request->user()->id)->first();
+        $car = Car::where("reference", $reference)->whereUserId($request->user()->id)->first();
         if (!$car) {
             return response()->json([
                 "message" => "Your are not connected to this car."

@@ -14,6 +14,7 @@ Route::prefix('users')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('logout', [UserController::class, 'logout']);
         Route::get('profile', [UserController::class, 'profile']);
+        Route::get('connected-car', [UserController::class, 'connectedCar']);
     });
 });
 
@@ -21,8 +22,8 @@ Route::prefix('users')->group(function () {
 Route::prefix('cars')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [CarController::class, 'index'])->withoutMiddleware('auth:sanctum');
     Route::get('/{id}', [CarController::class, 'show'])->withoutMiddleware('auth:sanctum');
-    Route::get('connect', [CarController::class, 'connect']);
-    Route::get('disconnect', [CarController::class, 'disconnect']);
+    Route::post('connect/{reference}', [CarController::class, 'connect']);
+    Route::get('disconnect/{reference}', [CarController::class, 'disconnect']);
     Route::get('distance', [CarController::class, 'distance'])->withoutMiddleware('auth:sanctum');
 });
 

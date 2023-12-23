@@ -57,6 +57,11 @@ class UserController extends Controller
         ], 200);
     }
 
+    // connected car
+    public function connectedCar() {
+        return User::with('car')->find(auth()->id());
+    }
+
     // logout
     public function logout(Request $request)
     {
